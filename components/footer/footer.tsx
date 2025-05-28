@@ -20,7 +20,7 @@ const Footer = () => {
                             </div>
                             <div id="block-12" className="widget widget_block widget_text">
                                 <p className="text-sm mt-5 mb-5">
-                                    JobBox is the heart of the design community and the best resource to discover and connect with designers and jobs worldwide.
+                                    Dreamjob choose your dream Job Now
                                 </p>
                             </div>
                             <div id="block-13" className="widget widget_block">
