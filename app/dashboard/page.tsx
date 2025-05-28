@@ -1,56 +1,88 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
+"use client"
+import React from 'react';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
+import { StatCard } from '@/components/dashboard/StatCard';
+import { RecentJobs } from '@/components/dashboard/RecentJobs';
+import { RecentApplications } from '@/components/dashboard/RecentApplications';
+import { ActivityFeed } from '@/components/dashboard/ActivityFeed';
+import { Briefcase, Users, User, Calendar } from 'lucide-react';
+import { useEffect } from 'react';
+import { useSidebar } from '@/providers/SidebarProvider';
+import { cn } from '@/lib/utils';
 
-export default function Page() {
+export function Dashboard() {
+  const { isOpen } = useSidebar();
+
+  // Update main content width when sidebar state changes
+  useEffect(() => {
+    const mainElement = document.getElementById('dashboard-main');
+    if (mainElement) {
+      if (isOpen) {
+        mainElement.classList.remove('ml-20');
+        mainElement.classList.add('ml-64');
+      } else {
+        mainElement.classList.remove('ml-64');
+        mainElement.classList.add('ml-20');
+      }
+    }
+  }, [isOpen]);
+
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator
-              orientation="vertical"
-              className="mr-2 data-[orientation=vertical]:h-4"
-            />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/home">
-                    Dreamjob Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="bg-gray-200 text-center  aspect-video rounded-xl" > JOBS</div>
-            <div className="bg-gray-200 text-center  aspect-video rounded-xl" > APPLICATIONS</div>
-            <div className="bg-gray-200 text-center  aspect-video rounded-xl" > RECRUITER</div>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-muted-foreground">
+          Overview of your job portal metrics and recent activity.
+        </p>
+      </div>
 
-          </div>
-          <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          title="Total Jobs"
+          value="124"
+          icon={<Briefcase className="h-5 w-5 text-dashboard-blue" />}
+          change={{ value: 12, positive: true }}
+        />
+        <StatCard
+          title="Total Applications"
+          value="842"
+          icon={<Calendar className="h-5 w-5 text-dashboard-green" />}
+          iconClassName="bg-dashboard-green/10"
+          change={{ value: 18, positive: true }}
+        />
+        <StatCard
+          title="Recruiters"
+          value="28"
+          icon={<Users className="h-5 w-5 text-dashboard-purple" />}
+          iconClassName="bg-dashboard-purple/10"
+          change={{ value: 5, positive: true }}
+        />
+        <StatCard
+          title="Candidates"
+          value="1,653"
+          icon={<User className="h-5 w-5 text-dashboard-yellow" />}
+          iconClassName="bg-dashboard-yellow/10"
+          change={{ value: 24, positive: true }}
+        />
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="md:col-span-2 space-y-6">
+          <RecentJobs />
+          <RecentApplications />
         </div>
-      </SidebarInset>
-    </SidebarProvider>
-  )
+        <div>
+          <ActivityFeed />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <DashboardLayout>
+      <Dashboard />
+    </DashboardLayout>
+  );
 }

@@ -22,7 +22,7 @@ export default function Home() {
                     <h2 className="text-3xl font-bold">Job of the day</h2>
                     <p >Search and connect with the right candidates faster</p>
                 </div>
-                <div className="flex items-center">
+                <div className="">
                     <Jobs /></div>
             </div>
             {/* banner 2 herobanner two  */}

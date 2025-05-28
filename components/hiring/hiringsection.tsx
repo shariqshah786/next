@@ -42,7 +42,7 @@ const HiringSection = () => {
                     {/* Apply Now Button */}
                     <div>
                         <a
-                            href="https://jthemes.net/themes/wp/jobbox/index.php/jobs/"
+                            href="/findjobs"
                             className="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-colors"
                         >
                             Apply Now
